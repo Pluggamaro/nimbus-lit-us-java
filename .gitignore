@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+*.pem
+target/
+*.class
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+build/
+samconfig.toml
+.aws-sam/
