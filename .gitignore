@@ -12,3 +12,4 @@ target/
 build/
 samconfig.toml
 .aws-sam/
+.vscode/
