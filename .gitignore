@@ -13,3 +13,4 @@ build/
 samconfig.toml
 .aws-sam/
 .vscode/
+issues.json
