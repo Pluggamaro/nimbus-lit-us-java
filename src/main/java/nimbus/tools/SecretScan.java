@@ -14,4 +14,8 @@ public final class SecretScan{
             Pattern.compile("-----BEGIN (RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----")
     );
 
+    private SecretScan(){}
+
+
+
 }
