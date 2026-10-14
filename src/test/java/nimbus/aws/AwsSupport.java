@@ -19,4 +19,11 @@ public final class AwsSupport {
         }
         return value;
     }
+
+    public static Region region(){
+        return Region.of(System.getenv().getOrDefault("AWS_REGION", "us-west-1"));
+    }
+
+
+
 }
