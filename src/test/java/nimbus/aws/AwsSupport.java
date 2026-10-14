@@ -11,6 +11,8 @@ public final class AwsSupport {
     /** Returns the variable's value or
      * fails with a message telling you
      * what to set
+     * @param name the env var to search
+     * @return String value of the env var found
      */
     public static String env(String name){
         String value =  System.getenv(name);
@@ -20,6 +22,10 @@ public final class AwsSupport {
         return value;
     }
 
+    /** Reads the region,
+     * defaulting to Ireland
+     * @return Region name of the region or default
+     */
     public static Region region(){
         return Region.of(System.getenv().getOrDefault("AWS_REGION", "us-west-1"));
     }
