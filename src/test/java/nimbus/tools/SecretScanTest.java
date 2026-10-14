@@ -13,5 +13,8 @@ public class SecretScanTest {
         assertFalse(SecretScan.findSecrets("aws_access_key_id="+FAKE_KEY).isEmpty());
     }
 
-    
+    @Test
+    void detectsPrivateKeyHeader(){
+        assertFalse(SecretScan.findSecretes("\"-----BEGIN RSA \" + \"PRIVATE KEY-----\"").isEmpty());
+    }
 }
