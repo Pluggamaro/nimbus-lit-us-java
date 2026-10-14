@@ -23,13 +23,19 @@ public final class AwsSupport {
     }
 
     /** Reads the region,
-     * defaulting to Ireland
-     * @return Region name of the region or default
+     *  defaulting to Ireland
+     *  @return Region name of the region or default
      */
     public static Region region(){
         return Region.of(System.getenv().getOrDefault("AWS_REGION", "us-west-1"));
     }
 
-
+    /** Reads the profile or
+     *  returns the default profile
+     *  @return ProfileCredentialsProvider
+     */
+    public static ProfileCredentialsProvider profile(){
+        return ProfileCredentialsProvider.create(System.getenv().getOrDefault("AWS_PROFILE","nimbus"));
+    }
 
 }
