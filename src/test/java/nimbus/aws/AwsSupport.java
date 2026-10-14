@@ -1,7 +1,6 @@
 package nimbus.aws;
 
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
-import
 import software.amazon.awssdk.regions.Region;
 
 public final class AwsSupport {
@@ -17,7 +16,7 @@ public final class AwsSupport {
     public static String env(String name){
         String value =  System.getenv(name);
         if(value == null || value.isBlank()){
-            throw new IllegalStateException("Set "+name+ " in your shell (see .env.example)"):
+            throw new IllegalStateException("Set "+name+ " in your shell (see .env.example)");
         }
         return value;
     }
