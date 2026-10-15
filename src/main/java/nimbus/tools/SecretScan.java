@@ -17,7 +17,11 @@ public final class SecretScan{
 
     private SecretScan(){}
 
-    
+    /**
+     * Returns the pattern-matched tex, empty means clean.
+     * @param text the secret to be searched
+     * @return List<Pattern> that consists of the matched text patterns
+     */
     public List<Pattern> findSecrets(String text){
         List<Pattern> hits = new ArrayList<>();
 
