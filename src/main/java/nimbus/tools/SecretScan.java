@@ -1,5 +1,6 @@
 package nimbus.tools;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -16,6 +17,11 @@ public final class SecretScan{
 
     private SecretScan(){}
 
+    
+    public List<Pattern> findSecrets(String text){
+        List<Pattern> hits = new ArrayList<>();
 
+        return hits;
+    }
 
 }
