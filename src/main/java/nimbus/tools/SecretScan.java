@@ -74,8 +74,12 @@ public final class SecretScan{
      * @return List<String> : files found to be tracked by git
      */
     private static List<String> trackedFiles() {
-        try (Process gitFiles = new ProcessBuilder("git", "ls-files").start();){
-            String output = new String(gitFiles.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+        try {
+            Process gitFiles = new ProcessBuilder("git","ls-files").start();
+            String output;
+            try(var input = gitFiles.getInputStream()){
+                output = new String(input.readAllBytes(), StandardCharsets.UTF_8);
+            }
             if (gitFiles.waitFor() != 0) {
                 throw new IllegalStateException("Git files failed");
             }
