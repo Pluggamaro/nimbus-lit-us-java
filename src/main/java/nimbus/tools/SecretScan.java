@@ -39,7 +39,6 @@ public final class SecretScan{
     /**
      * Reads every git tracked file and returns its path for every
      * hit(match)
-     * @param root : The path of the repo
      * @return List<String> : The list containing the files that are git tracked and
      * containing secrets.
      */
@@ -50,7 +49,10 @@ public final class SecretScan{
         return hits;
     }
 
-
+    /**
+     * Non tracked files are automatically skipped.
+     * @return List<String> : files found to be tracked by git
+     */
     public List<String> trackedFiles() {
         try (Process gitFiles = new ProcessBuilder("git", "ls-files").start();){
             String output = new String(gitFiles.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
