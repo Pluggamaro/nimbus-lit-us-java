@@ -2,8 +2,9 @@ package nimbus.tools;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SecretScanTest {
     static final String FAKE_KEY = "AKIA" + "IOSFODNN7EXAMPLE";
@@ -15,6 +16,21 @@ public class SecretScanTest {
 
     @Test
     void detectsPrivateKeyHeader(){
-        assertFalse(SecretScan.findSecretes("\"-----BEGIN RSA \" + \"PRIVATE KEY-----\"").isEmpty());
+        assertFalse(SecretScan.findSecrets("-----BEGIN RSA " + "PRIVATE KEY-----").isEmpty());
+    }
+
+    @Test
+    void detectsAwsSecretKeyAssignment(){
+        assertFalse(SecretScan.findSecrets("aws_secret_access_key=" + "x".repeat(40)).isEmpty());
+    }
+
+    @Test
+    void cleanTextHasNoFindings(){
+        assertEquals(List.of(), SecretScan.findSecrets("TABLE_NAME=nimbus-lit-dev"));
+    }
+
+    @Test
+    void repoHasNoTrackedSecrets(){
+        assertTrue(SecretScan.scanRepo().isEmpty());
     }
 }
