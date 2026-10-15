@@ -2,8 +2,11 @@ package nimbus.tools;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.charset.MalformedInputException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -45,7 +48,24 @@ public final class SecretScan{
 
     public static List<String> scanRepo(){
         List<String> hits = new ArrayList<>();
-
+        for(String file: trackedFiles()) {
+            Path path = Path.of(file);
+            if (!Files.isRegularFile(path)) {
+                continue;
+            }
+            String content;
+            try {
+                content = Files.readString(path, StandardCharsets.UTF_8);
+            } catch (MalformedInputException e) {
+                // skip binary files
+                continue;
+            }catch(IOException e){
+                throw new UncheckedIOException(e);
+            }
+            for(String hit : findSecrets(content)){
+                hits.add(file + ": "+hit);
+            }
+        }
         return hits;
     }
 
@@ -53,7 +73,7 @@ public final class SecretScan{
      * Non tracked files are automatically skipped.
      * @return List<String> : files found to be tracked by git
      */
-    public List<String> trackedFiles() {
+    private static List<String> trackedFiles() {
         try (Process gitFiles = new ProcessBuilder("git", "ls-files").start();){
             String output = new String(gitFiles.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
             if (gitFiles.waitFor() != 0) {
@@ -68,5 +88,6 @@ public final class SecretScan{
             throw new InternalError("Git files interrupted");
         }
     }
+
 
 }
