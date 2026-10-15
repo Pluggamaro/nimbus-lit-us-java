@@ -1,11 +1,15 @@
 package nimbus;
 
+import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DocsTest {
     //locate docs
@@ -30,5 +34,13 @@ class DocsTest {
         return Arrays.stream(read(name).split("\n"))
                 .map(String::strip).filter(line -> line.startsWith("##"))
                 .collect(Collectors.toSet());
+    }
+
+    @Test
+    void architectureHasRequiredSections()throws IOException{
+        Set<String> required = Set.of("## Problem and users", "## MVP scope", "## Architecture",
+                "## Data flow", "## Trust boundaries",
+                "## Service rationale", "## Environment strategy");
+        assertTrue(headings("architecture.md").containsAll(required));
     }
 }
