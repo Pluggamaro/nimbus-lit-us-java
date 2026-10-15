@@ -22,14 +22,13 @@ public final class SecretScan{
      * @param text the secret to be searched
      * @return List<Pattern> that consists of the matched text patterns
      */
-    public List<Pattern> findSecrets(String text){
-        List<Pattern> hits = new ArrayList<>();
+    public List<String> findSecrets(String text){
+        List<String> hits = new ArrayList<>();
         for(Pattern pattern : PATTERNS){
             if(pattern.matcher(text).find()){
-                hits.add(pattern);
+                hits.add(pattern.pattern());
             }
         }
-
         return hits;
     }
 
