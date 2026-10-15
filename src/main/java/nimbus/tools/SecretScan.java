@@ -1,5 +1,8 @@
 package nimbus.tools;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +44,28 @@ public final class SecretScan{
      * containing secrets.
      */
 
-    public static List<String> scanRepo(Path root){
+    public static List<String> scanRepo(){
         List<String> hits = new ArrayList<>();
 
         return hits;
+    }
+
+    
+    public List<String> trackedFiles() {
+        try {
+            Process gitFiles = new ProcessBuilder("git", "ls-files").start();
+            String output = new String(gitFiles.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+            if (gitFiles.waitFor() != 0) {
+                throw new IllegalStateException("Git files failed");
+            }
+            return output.lines().filter(line -> !line.isBlank()).toList();
+        }catch(IOException e){
+            throw new UncheckedIOException(e);
+        }
+        catch(InterruptedException e){
+            Thread.currentThread().interrupt();
+            throw new InternalError("Git files interrupted");
+        }
     }
 
 }
