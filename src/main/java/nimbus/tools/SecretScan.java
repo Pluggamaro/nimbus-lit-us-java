@@ -1,5 +1,6 @@
 package nimbus.tools;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -22,7 +23,7 @@ public final class SecretScan{
      * @param text the secret to be searched
      * @return List<Pattern> that consists of the matched text patterns
      */
-    public List<String> findSecrets(String text){
+    public static List<String> findSecrets(String text){
         List<String> hits = new ArrayList<>();
         for(Pattern pattern : PATTERNS){
             if(pattern.matcher(text).find()){
@@ -39,5 +40,11 @@ public final class SecretScan{
      * @return List<String> : The list containing the files that are git tracked and
      * containing secrets.
      */
+
+    public static List<String> scanRepo(Path root){
+        List<String> hits = new ArrayList<>();
+
+        return hits;
+    }
 
 }

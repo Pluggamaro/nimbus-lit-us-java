@@ -15,6 +15,6 @@ public class SecretScanTest {
 
     @Test
     void detectsPrivateKeyHeader(){
-        assertFalse(SecretScan.findSecretes("\"-----BEGIN RSA \" + \"PRIVATE KEY-----\"").isEmpty());
+        assertFalse(SecretScan.findSecrets("-----BEGIN RSA " + "PRIVATE KEY-----").isEmpty());
     }
 }
