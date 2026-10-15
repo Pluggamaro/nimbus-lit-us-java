@@ -32,4 +32,12 @@ public final class SecretScan{
         return hits;
     }
 
+    /**
+     * Reads every git tracked file and returns its path for every
+     * hit(match)
+     * @param root : The path of the repo
+     * @return List<String> : The list containing the files that are git tracked and
+     * containing secrets.
+     */
+
 }
