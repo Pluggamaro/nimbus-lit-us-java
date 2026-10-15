@@ -24,6 +24,11 @@ public final class SecretScan{
      */
     public List<Pattern> findSecrets(String text){
         List<Pattern> hits = new ArrayList<>();
+        for(Pattern pattern : PATTERNS){
+            if(pattern.matcher(text).find()){
+                hits.add(pattern);
+            }
+        }
 
         return hits;
     }
