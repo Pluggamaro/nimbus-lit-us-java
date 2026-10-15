@@ -11,3 +11,6 @@ chore: ..., feat: ..., test: ..., docs: ..., fix: ....
 
 ## Work on a branch 
 git checkout -b chore/repo-foundation, commit, push, open a PR, merge.
+
+## Security
+No credentials exist in repo, scanner tests exist.
