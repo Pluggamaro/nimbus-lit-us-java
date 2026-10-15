@@ -50,10 +50,9 @@ public final class SecretScan{
         return hits;
     }
 
-    
+
     public List<String> trackedFiles() {
-        try {
-            Process gitFiles = new ProcessBuilder("git", "ls-files").start();
+        try (Process gitFiles = new ProcessBuilder("git", "ls-files").start();){
             String output = new String(gitFiles.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
             if (gitFiles.waitFor() != 0) {
                 throw new IllegalStateException("Git files failed");
