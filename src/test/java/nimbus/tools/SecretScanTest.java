@@ -17,4 +17,9 @@ public class SecretScanTest {
     void detectsPrivateKeyHeader(){
         assertFalse(SecretScan.findSecrets("-----BEGIN RSA " + "PRIVATE KEY-----").isEmpty());
     }
+
+    @Test
+    void detectsAwsSecretKeyAssignment(){
+        assertFalse(SecretScan.findSecrets("aws_secret_access_key=" + "x".repeat(40)).isEmpty());
+    }
 }
