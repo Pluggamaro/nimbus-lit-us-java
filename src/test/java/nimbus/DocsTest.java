@@ -36,6 +36,7 @@ class DocsTest {
                 .collect(Collectors.toSet());
     }
 
+    //scans for precise headings in the architecture doc
     @Test
     void architectureHasRequiredSections()throws IOException{
         Set<String> required = Set.of("## Problem and users", "## MVP scope", "## Architecture",
@@ -43,4 +44,6 @@ class DocsTest {
                 "## Service rationale", "## Environment strategy");
         assertTrue(headings("architecture.md").containsAll(required));
     }
+
+    
 }
