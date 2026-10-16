@@ -11,6 +11,7 @@ to zero when not in use.
 In scope:
 - `POST /notes` creates a note of up to 280 characters
 - `GET /notes` lists notes, newest first
+- `GET /export` exposes a time-limited download link for all notes as JSON
 
 ## Architecture 
 ## Data flow
