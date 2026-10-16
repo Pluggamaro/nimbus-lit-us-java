@@ -10,6 +10,7 @@ to zero when not in use.
 ## MVP scope 
 In scope:
 - `POST /notes` creates a note of up to 280 characters
+- `GET /notes` lists notes, newest first
 
 ## Architecture 
 ## Data flow
