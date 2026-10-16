@@ -20,6 +20,24 @@ Out of scope:
 - Multiple environments (dev only)
 
 ## Architecture 
+  curl / client
+        | HTTPS (TLS)
+        v
+  API Gateway (HTTP, public)
+        |
+        v
+     Lambda                    
+        |                       |
+        v                        +---> S3(private bucket: export)
+  DynamoDB (notes)                       |
+        |                              presigned url on `/export` sent back 
+        v                              to client via gateway back to client
+  CloudWatch(alarms, metrics, logs)      |  
+                                            |
+  curl/ client <------Download link-----<|
+
+  IAM roles guard every arrow. Region: one. Environment: dev only.
+ 
 ## Data flow
 ## Trust boundaries 
 ## Service rationale
