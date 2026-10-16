@@ -13,6 +13,12 @@ In scope:
 - `GET /notes` lists notes, newest first
 - `GET /export` exposes a time-limited download link for all notes as JSON
 
+Out of scope:
+- User accounts and authentication
+- A frontend
+- A VPC, containers, or EC2 instances
+- Multiple environments (dev only)
+
 ## Architecture 
 ## Data flow
 ## Trust boundaries 
