@@ -44,7 +44,9 @@ The client sends a JSON body  containing  a `text` field. Lambda first checks th
 A body over 2048 bytes gets a 413 response and is never parsed. Lambda then checks that the body
 is valid JSON, that `text` is present and is a string, that is not blank after trimming, and that
 it is no longer than 280 characters. If any check fails, the client receives a 400 response with a 
-short error message and nothing is stored.
+short error message and nothing is stored. If all checks pass, Lambda generates a unique `note_id`,
+records the creation time, and writes the note to DynamoDB. The client receives a 201 response 
+containing the saved note, including the server-generated ID and timestamp.
 
 ## Trust boundaries 
 ## Service rationale
