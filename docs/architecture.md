@@ -53,7 +53,10 @@ GET /notes.
 
 The request has no body. Lambda reads every note from DynamoDB, sorts them by creation time with the 
 newest first, and returns them as a JSON array with a `200` response. If there are no notes, the 
-repsonse is an empty array.
+response is an empty array with the same 200 status code, not a 404, because the collection exists
+and is simply empty. If DynamoDB cannot be reached, the client receives a 500 response with the message
+`internal error`, and the detials are written only to the CloudWatch logs.
+
 
 ## Trust boundaries 
 ## Service rationale
