@@ -66,8 +66,16 @@ and the expiry time in seconds. The client receives a 200 response containing th
 in seconds. The client then downloads the file directly from S3 using that URL. Lambda never sends the file
 contents itself. After the link expires, it stops working, and the lifecycle rule deletes the file after 7 days.
 
-
-
 ## Trust boundaries 
+
+Each arow in the architecture diagram is a trust boundary. At each one, the receiving side decides whether
+to trust the caller.
+
+**Internet to API Gateway.**
+
+The endpoint is public, and this MVP has no authentication. The protections at this boundary are HTTPS, which
+encrypts traffic in transit, input validation in the Lambda code (size, shape, and length), and throttling on
+the stage, set to a rate of 2 requests per second with a burst of 5.
+
 ## Service rationale
 ## Environment strategy
