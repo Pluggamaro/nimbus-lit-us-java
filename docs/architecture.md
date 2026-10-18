@@ -57,6 +57,11 @@ response is an empty array with the same 200 status code, not a 404, because the
 and is simply empty. If DynamoDB cannot be reached, the client receives a 500 response with the message
 `internal error`, and the detials are written only to the CloudWatch logs.
 
+GET /export.
+
+The request has no body. Lambda reads all notes from DynamoDB, writes them as a JSON file to the private 
+S3 bucket under a key that includes the timestamp, such as `exports/notes-<timestamp>.json`, and generates
+a presigned URL for that file valid for 300 seconds. 
 
 ## Trust boundaries 
 ## Service rationale
