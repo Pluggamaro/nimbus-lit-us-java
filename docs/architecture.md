@@ -43,7 +43,8 @@ POST /notes.
 The client sends a JSON body  containing  a `text` field. Lambda first checks the request size.
 A body over 2048 bytes gets a 413 response and is never parsed. Lambda then checks that the body
 is valid JSON, that `text` is present and is a string, that is not blank after trimming, and that
-it is no longer than 280 characters. 
+it is no longer than 280 characters. If any check fails, the client receives a 400 response with a 
+short error message and nothing is stored.
 
 ## Trust boundaries 
 ## Service rationale
