@@ -39,6 +39,12 @@ Out of scope:
   IAM roles guard every arrow. Region: one. Environment: dev only.
  
 ## Data flow
+POST /notes.
+The client sends a JSON body  containing  a `text` field. Lambda first checks the request size.
+A body over 2048 bytes gets a 413 response and is never parsed. Lambda then checks that the body
+is valid JSON, that `text` is present and is a string, that is not blank after trimming, and that
+it is no longer than 280 characters. 
+
 ## Trust boundaries 
 ## Service rationale
 ## Environment strategy
