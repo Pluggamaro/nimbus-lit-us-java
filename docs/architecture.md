@@ -40,6 +40,7 @@ Out of scope:
  
 ## Data flow
 POST /notes.
+
 The client sends a JSON body  containing  a `text` field. Lambda first checks the request size.
 A body over 2048 bytes gets a 413 response and is never parsed. Lambda then checks that the body
 is valid JSON, that `text` is present and is a string, that is not blank after trimming, and that
@@ -47,6 +48,12 @@ it is no longer than 280 characters. If any check fails, the client receives a 4
 short error message and nothing is stored. If all checks pass, Lambda generates a unique `note_id`,
 records the creation time, and writes the note to DynamoDB. The client receives a 201 response 
 containing the saved note, including the server-generated ID and timestamp.
+
+GET /notes.
+
+The request has no body. Lambda reads every note from DynamoDB, sorts them by creation time with the 
+newest first, and returns them as a JSON array with a `200` response. If there are no notes, the 
+repsonse is an empty array.
 
 ## Trust boundaries 
 ## Service rationale
