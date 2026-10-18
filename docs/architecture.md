@@ -61,7 +61,12 @@ GET /export.
 
 The request has no body. Lambda reads all notes from DynamoDB, writes them as a JSON file to the private 
 S3 bucket under a key that includes the timestamp, such as `exports/notes-<timestamp>.json`, and generates
-a presigned URL for that file valid for 300 seconds. 
+a presigned URL for that file valid for 300 seconds. The client receives a 200 response containing the URL
+and the expiry time in seconds. The client receives a 200 response containing the URL and the expiry time 
+in seconds. The client then downloads the file directly from S3 using that URL. Lambda never sends the file
+contents itself. After the link expires, it stops working, and the lifecycle rule deletes the file after 7 days.
+
+
 
 ## Trust boundaries 
 ## Service rationale
