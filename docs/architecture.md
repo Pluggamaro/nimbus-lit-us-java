@@ -82,7 +82,23 @@ the stage, set to a rate of 2 requests per second with a burst of 5.
 A resource-based policy on the function grants API Gateway permission to invoke it. This controls who may call
 the function. It does not control what the function may do.
 
+**Lambda to DynamoDB and S3.** 
 
+The Lambda execution role governs these actions. Lambda holds no access keys. It receives temporary credentials 
+from the role. The role allows only `dynamodb:PutItem` and `dynamodb:Scan` on the notes table, and `s3:PutObject` 
+and `s3:GetObject` on the `exports/` prefix.
+
+**Client to S3.** 
+
+The export bucket blocks all public access. The only way to read an export is a presigned URL, which grants access 
+to one object for 300 seconds. The URL carries the permissions of the role that signed it, so it can do no more than 
+that role can.
+
+**Accepted risk.** 
+
+Because the API has no authentication, anyone who can reach the endpoint can read every note through `GET /notes` and 
+`GET /export`. Notes in this MVP are therefore not private. Adding authentication, such as Cognito or IAM auth on the 
+API, is the first production change, listed under Known risks in `docs/security.md`.
 
 ## Service rationale
 ## Environment strategy
