@@ -77,5 +77,12 @@ The endpoint is public, and this MVP has no authentication. The protections at t
 encrypts traffic in transit, input validation in the Lambda code (size, shape, and length), and throttling on
 the stage, set to a rate of 2 requests per second with a burst of 5.
 
+**API Gateway to Lambda.**
+
+A resource-based policy on the function grants API Gateway permission to invoke it. This controls who may call
+the function. It does not control what the function may do.
+
+
+
 ## Service rationale
 ## Environment strategy
