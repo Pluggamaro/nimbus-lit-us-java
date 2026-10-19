@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class DocsTest {
     //locate docs
@@ -43,6 +45,16 @@ class DocsTest {
                 "## Data flow", "## Trust boundaries",
                 "## Service rationale", "## Environment strategy");
         assertTrue(headings("architecture.md").containsAll(required));
+    }
+
+    @Test 
+    void everyAwsServiceHasARationale()throws IOException{
+        String rationale = read("architecture.md").split("## Service rationale")[1];
+
+        for(String service : List.of("IAM", "S3", "Lambda", "API Gateway", "DynamoDB", "CloudWatch")){
+            assertTrue(rationale.contains(service));
+        }
+
     }
 
     
