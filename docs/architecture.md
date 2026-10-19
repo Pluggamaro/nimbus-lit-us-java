@@ -86,17 +86,29 @@ Because the API has no authentication, anyone who can reach the endpoint can rea
 
 ## Service rationale
 
-**IAM** controls every permission in the system. Roles give the Lambda function temporary credentials, so no access keys are stored in code or configuration. Not chosen: long-lived access keys embedded in the function.
+**IAM** 
 
-**S3** stores export files cheaply and is private by default. It supports presigned URLs and lifecycle rules that delete old exports automatically. Not chosen: storing export files as large attributes in DynamoDB, which has item size limits and costs more per gigabyte.
+controls every permission in the system. Roles give the Lambda function temporary credentials, so no access keys are stored in code or configuration. Not chosen: long-lived access keys embedded in the function.
 
-**Lambda** runs the Java code only when a request arrives, so there is no server to patch and no idle cost. Not chosen: EC2 instances, which bill by the hour even when no requests arrive, and containers on ECS, which need more setup for a small API.
+**S3** 
 
-**API Gateway** provides a public HTTPS endpoint with routing, throttling and metrics. Not chosen: an Application Load Balancer inside a VPC, which adds networking components and cost that this MVP does not need.
+stores export files cheaply and is private by default. It supports presigned URLs and lifecycle rules that delete old exports automatically. Not chosen: storing export files as large attributes in DynamoDB, which has item size limits and costs more per gigabyte.
 
-**DynamoDB** stores notes in a managed key-value table with on-demand billing, so cost tracks usage. Not chosen: RDS, which needs a running database instance billed hourly and usually a VPC to sit in.
+**Lambda** 
 
-**CloudWatch** receives logs and metrics from the other services automatically and hosts the alarms. Not chosen: a third-party monitoring service, which would add a vendor, a second bill and extra configuration.
+runs the Java code only when a request arrives, so there is no server to patch and no idle cost. Not chosen: EC2 instances, which bill by the hour even when no requests arrive, and containers on ECS, which need more setup for a small API.
+
+**API Gateway** 
+
+provides a public HTTPS endpoint with routing, throttling and metrics. Not chosen: an Application Load Balancer inside a VPC, which adds networking components and cost that this MVP does not need.
+
+**DynamoDB** 
+
+stores notes in a managed key-value table with on-demand billing, so cost tracks usage. Not chosen: RDS, which needs a running database instance billed hourly and usually a VPC to sit in.
+
+**CloudWatch** 
+
+receives logs and metrics from the other services automatically and hosts the alarms. Not chosen: a third-party monitoring service, which would add a vendor, a second bill and extra configuration.
 
 ## Environment strategy
 
@@ -107,3 +119,43 @@ Every resource carries two tags: `Project=nimbus-notes` and `Env=dev`. The tags 
 Separation between environments is by naming convention only. Resource names start with `nimbus` and end with `-dev`, for example `nimbus-notes-dev` and `nimbus-notes-handler-dev`.
 
 This is a deliberate trade-off. A production system would use a separate AWS account for each environment, because an account boundary is much stronger than a naming convention. Multiple environments were excluded from the MVP scope to keep the project focused on the cloud fundamentals. The production path is listed under Production improvements.
+
+## Production improvements
+
+These changes are needed before real users depend on the system. They are listed in rough priority order.
+
+**Authentication.** 
+
+Require a signed-in identity for `POST /notes`, `GET /notes` and `GET /export`, for example with Amazon Cognito or IAM authorisation on the API. Without it, all notes are readable by anyone who finds the endpoint.
+
+**Notification on alarms.** 
+
+Connect the 5xx CloudWatch alarm to an SNS topic that sends email or chat messages, so failures reach a person rather than waiting to be noticed.
+
+**Key design for notes.** 
+
+Replace the full-table Scan with a query on a partition key that groups notes per user, with `created_at` as the sort key. This keeps read cost flat as the table grows and returns notes already ordered.
+
+**Separate accounts per environment.** 
+
+Move `staging` and `prod` into their own AWS accounts so a mistake in one environment cannot affect another, and billing is reported per environment.
+
+**Deployment pipeline with OIDC.** 
+
+Deploy through GitHub Actions, assuming an AWS role with OpenID Connect, so no long-lived access keys are stored in the repository.
+
+**Web application firewall and custom domain.** 
+
+Put AWS WAF in front of the API to filter common attacks, and serve the API from a custom domain with an ACM certificate.
+
+**Backups and recovery.** 
+
+Enable point-in-time recovery on the DynamoDB table and define how long exports are kept, since the 7-day lifecycle rule is a cost control, not a backup.
+
+**Tracing.** 
+
+Enable AWS X-Ray on the Lambda function so a slow request can be followed across API Gateway, Lambda, DynamoDB and S3.
+
+**Multi-region plan.** 
+
+The current design runs in one region, so a regional outage stops the service. A production design would define a second region and how traffic fails over to it.
