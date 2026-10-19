@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class DocsTest {
     //locate docs
@@ -48,11 +49,11 @@ class DocsTest {
 
     @Test 
     void everyAwsServiceHasARationale()throws IOException{
-        String[] rationale = read("architecture.md").split("## Service Rationale");
+        String rationale = read("architecture.md").split("## Service rationale")[1];
 
-        // for(String service : List.of("IAM", "S3", "Lambda", "API Gateway", "DynamoDB", "CloudWatch")){
-        //     assertTrue(rationale.contains(service));
-        // }
+        for(String service : List.of("IAM", "S3", "Lambda", "API Gateway", "DynamoDB", "CloudWatch")){
+            assertTrue(rationale.contains(service));
+        }
 
     }
 
