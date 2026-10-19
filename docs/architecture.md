@@ -99,3 +99,11 @@ Because the API has no authentication, anyone who can reach the endpoint can rea
 **CloudWatch** receives logs and metrics from the other services automatically and hosts the alarms. Not chosen: a third-party monitoring service, which would add a vendor, a second bill and extra configuration.
 
 ## Environment strategy
+
+This MVP uses one AWS account, one region and one environment, `dev`. The region is `eu-west-1`, chosen because of service availability.
+
+Every resource carries two tags: `Project=nimbus-notes` and `Env=dev`. The tags let the teardown check and the Tag Editor find all project resources, and they are applied when each resource is created.
+
+Separation between environments is by naming convention only. Resource names start with `nimbus` and end with `-dev`, for example `nimbus-notes-dev` and `nimbus-notes-handler-dev`.
+
+This is a deliberate trade-off. A production system would use a separate AWS account for each environment, because an account boundary is much stronger than a naming convention. Multiple environments were excluded from the MVP scope to keep the project focused on the cloud fundamentals. The production path is listed under Production improvements.
