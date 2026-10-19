@@ -85,4 +85,17 @@ The export bucket blocks all public access. The only way to read an export is a 
 Because the API has no authentication, anyone who can reach the endpoint can read every note through `GET /notes` and `GET /export`. Notes in this MVP are therefore not private. Adding authentication, such as Cognito or IAM auth on the API, is the first production change, listed under Known risks in `docs/security.md`.
 
 ## Service rationale
+
+**IAM** controls every permission in the system. Roles give the Lambda function temporary credentials, so no access keys are stored in code or configuration. Not chosen: long-lived access keys embedded in the function.
+
+**S3** stores export files cheaply and is private by default. It supports presigned URLs and lifecycle rules that delete old exports automatically. Not chosen: storing export files as large attributes in DynamoDB, which has item size limits and costs more per gigabyte.
+
+**Lambda** runs the Java code only when a request arrives, so there is no server to patch and no idle cost. Not chosen: EC2 instances, which bill by the hour even when no requests arrive, and containers on ECS, which need more setup for a small API.
+
+**API Gateway** provides a public HTTPS endpoint with routing, throttling and metrics. Not chosen: an Application Load Balancer inside a VPC, which adds networking components and cost that this MVP does not need.
+
+**DynamoDB** stores notes in a managed key-value table with on-demand billing, so cost tracks usage. Not chosen: RDS, which needs a running database instance billed hourly and usually a VPC to sit in.
+
+**CloudWatch** receives logs and metrics from the other services automatically and hosts the alarms. Not chosen: a third-party monitoring service, which would add a vendor, a second bill and extra configuration.
+
 ## Environment strategy
