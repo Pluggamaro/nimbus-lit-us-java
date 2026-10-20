@@ -57,5 +57,9 @@ class DocsTest {
 
     }
 
-    
+    @Test 
+    void awsServicesDocsHasConventions()throws IOException{
+        assertTrue(headings("aws-service.md").containsAll(List.of("## Region", "## Naming convention", 
+        "## Tagging convention", "## Shared responsibility")));
+    }
 }
