@@ -8,8 +8,11 @@ An Availability Zone (AZ) is a separate data centre inside a region. Each region
 
 The region is a single point of failure for this MVP. A whole-region outage would stop the service. That risk is recorded in the architecture document and is listed as a production improvement.
 
-
 ## Naming convention 
+
+Resources are named `nimbus-<thing>-<env>`, where `<env>` is `dev` for this project. Examples: `nimbus-notes-dev` for the table, `nimbus-notes-handler-dev` for the Lambda function, `nimbus-lambda-role-dev` for the execution role.
+
+S3 bucket names are global across all AWS accounts, so the export bucket adds a unique suffix, for example `nimbus-exports-dev-<initials><digits>`.
 
 ## Tagging convention 
 
