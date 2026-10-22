@@ -3,6 +3,7 @@
 ## Region
 
 The project runs in `eu-west-1` (Ireland). Every service used here is available in that region, so no service has to be replaced or left out.
+In this account, the region has three Availability Zones, `eu-west-1a`, `eu-west-1b` and `eu-west-1c`. Zone letters are assigned per account, so the stable identifiers are the zone IDs, `euw1-az1` to `euw1-az3`.
 
 An Availability Zone (AZ) is a separate data centre inside a region. Each region has several, connected by fast links but physically apart, so a fault in one does not stop the others. Lambda, DynamoDB and S3 Standard store copies across multiple AZs by default, so availability within the region comes without extra configuration.
 
