@@ -16,4 +16,12 @@ S3 bucket names are global across all AWS accounts, so the export bucket adds a 
 
 ## Tagging convention 
 
+Every resource carries these tags:
+
+- `Project=nimbus-notes` identifies the project that owns the resource.
+- `Env=dev` identifies the environment.
+- `Owner=<your-handle>` identifies the person responsible for the resource.
+
+Tags are applied when each resource is created. Untagged resources are missed by the teardown check and by cost reporting.
+
 ## Shared responsibility
