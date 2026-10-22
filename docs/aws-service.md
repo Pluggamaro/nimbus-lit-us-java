@@ -25,3 +25,9 @@ Every resource carries these tags:
 Tags are applied when each resource is created. Untagged resources are missed by the teardown check and by cost reporting.
 
 ## Shared responsibility
+
+AWS secures the cloud: the data centres, the hardware, and the software inside managed services such as Lambda, DynamoDB and S3.
+
+This project secures what it puts in the cloud: who can access each resource (IAM roles and policies), the data stored in the table and bucket, whether the bucket stays private, and how each service is configured.
+
+For example, AWS keeps the DynamoDB servers patched. This project decides whether the notes table can be read by anyone, and it keeps the export bucket private.
