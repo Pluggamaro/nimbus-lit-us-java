@@ -16,3 +16,10 @@ A monthly cost budget of 5 USD, with email alerts to the project owner's address
 - At 100% of forecasted spend (5 USD). This means spending is on course to reach the limit by month end.
 
 A budget sends alerts only. It does not stop charges, so the alerts are the control, and the cost rules above are how the project avoids reaching them.
+
+## Resource cost log
+
+Each AWS ticket adds one row for every resource it creates. The teardown uses this table as its inventory.
+
+| Resource | Created in | Cost note | How to delete |
+|----------|------------|-----------|---------------|
