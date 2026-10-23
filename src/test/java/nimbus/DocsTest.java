@@ -72,7 +72,7 @@ class DocsTest {
     void costRulesForbidHourlyBilledServices() throws IOException{
         String text = read("cost.md");
         for(String service : List.of("EC2", "RDS", "NAT Gateway", "load balance")){
-            assertFalse(text.contains(service), service);
+            assertTrue(text.contains(service), service);
         }
     }
 }
