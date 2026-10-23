@@ -62,4 +62,17 @@ class DocsTest {
         assertTrue(headings("aws-service.md").containsAll(List.of("## Region", "## Naming convention", 
         "## Tagging convention", "## Shared responsibility")));
     }
+
+    @Test 
+    void costDocHasRulesAndResourceLog()throws IOException{
+        assertTrue(headings("cost.md").containsAll(Set.of("## Cost rules", "## Budget", "## Resource cost log")));
+    }
+
+    @Test 
+    void costRulesForbidHourlyBilledServices() throws IOException{
+        String text = read("cost.md");
+        for(String service : List.of("EC2", "RDS", "NAT Gateway", "load balance")){
+            assertTrue(text.contains(service), service);
+        }
+    }
 }
