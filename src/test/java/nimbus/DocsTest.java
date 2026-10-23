@@ -63,11 +63,17 @@ class DocsTest {
         "## Tagging convention", "## Shared responsibility")));
     }
 
+    /**
+     * Tests that the cost doc has the required sections
+     */
     @Test 
     void costDocHasRulesAndResourceLog()throws IOException{
         assertTrue(headings("cost.md").containsAll(Set.of("## Cost rules", "## Budget", "## Resource cost log")));
     }
 
+    /**
+     * Tests that the cost rules forbid hourly billed services.
+     */
     @Test 
     void costRulesForbidHourlyBilledServices() throws IOException{
         String text = read("cost.md");
