@@ -67,4 +67,12 @@ class DocsTest {
     void costDocHasRulesAndResourceLog()throws IOException{
         assertTrue(headings("cost.md").containsAll(Set.of("## Cost rules", "## Budget", "## Resource cost log")));
     }
+
+    @Test 
+    void costRulesForbidHourlyBilledServices() throws IOException{
+        String text = read("cost.md");
+        for(String service : List.of("EC2", "RDS", "NAT Gateway", "load balance")){
+            assertFalse(text.contains(service), service);
+        }
+    }
 }
