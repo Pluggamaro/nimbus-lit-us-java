@@ -22,4 +22,5 @@ A budget sends alerts only. It does not stop charges, so the alerts are the cont
 Each AWS ticket adds one row for every resource it creates. The teardown uses this table as its inventory.
 
 | Resource | Created in | Cost note | How to delete |
+
 |----------|------------|-----------|---------------|
