@@ -32,3 +32,9 @@ AWS secures the cloud: the data centres, the hardware, and the software inside m
 This project secures what it puts in the cloud: who can access each resource (IAM roles and policies), the data stored in the table and bucket, whether the bucket stays private, and how each service is configured.
 
 For example, AWS keeps the DynamoDB servers patched. This project decides whether the notes table can be read by anyone, and it keeps the export bucket private.
+
+## IAM
+
+The dev user `nimbus-dev` is a member of the `nimbus-admins` group, which has AdministratorAccess. This is a learning choice: the single user needs to create and delete every resource in the project. Production would grant only the specific actions each workload needs.
+
+Learning credentials are a long-lived access key stored in `~/.aws/`, outside the repository. Production would use IAM Identity Center with `aws configure sso`, which issues short-lived credentials, so no long-lived key exists on any machine. The `nimbus-dev` user has MFA assigned to its console sign-in.
