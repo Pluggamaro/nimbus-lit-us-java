@@ -25,6 +25,9 @@ public class SecretScanTest {
         assertFalse(SecretScan.findSecrets("-----BEGIN RSA " + "PRIVATE KEY-----").isEmpty());
     }
 
+    /**
+     * Tests that the SecretScan tool detects an AWS secret key assignment in a string.
+     */
     @Test
     void detectsAwsSecretKeyAssignment(){
         assertFalse(SecretScan.findSecrets("aws_secret_access_key=" + "x".repeat(40)).isEmpty());
