@@ -23,4 +23,4 @@ Each AWS ticket adds one row for every resource it creates. The teardown uses th
 
 | Resource | Created in | Cost note | How to delete |
 
-|----------|------------|-----------|---------------|
+| IAM user `nimbus-dev`, group `nimbus-admins`, one access key | IAM console, AWS-007 | IAM is free | IAM > Users > nimbus-dev > delete the access key, then delete the user, then delete the group |
