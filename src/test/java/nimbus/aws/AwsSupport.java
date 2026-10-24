@@ -26,7 +26,7 @@ public final class AwsSupport {
      *  @return Region name of the region or default
      */
     public static Region region(){
-        return Region.of(System.getenv().getOrDefault("AWS_REGION", "us-west-1"));
+        return Region.of(System.getenv().getOrDefault("AWS_REGION", "eu-west-1"));
     }
 
     /** Reads the profile or

@@ -15,6 +15,9 @@ class ScaffoldTest {
         assertEquals("nimbus", Scaffold.NAME);
     }
 
+    /**
+     * Tests that the pom.xml file excludes AWS tests by default.
+     */
     @Test
     void awsTestsAreExcludedByDefault() throws Exception {
         String pom = Files.readString(Path.of("pom.xml"));
