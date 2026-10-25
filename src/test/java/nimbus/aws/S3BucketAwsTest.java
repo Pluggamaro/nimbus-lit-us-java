@@ -13,7 +13,7 @@ import software.amazon.awssdk.services.s3.model.PublicAccessBlockConfiguration;
 import software.amazon.awssdk.services.s3.model.Tag;
 
 @org.junit.jupiter.api.Tag("aws")
-class S3BucketAwsTest {
+public class S3BucketAwsTest {
     static final String BUCKET = AwsSupport.env("BUCKET_NAME");
 
     @Test
