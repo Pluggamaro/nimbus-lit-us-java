@@ -1,11 +1,16 @@
 package nimbus.aws;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PublicAccessBlockConfiguration;
+import software.amazon.awssdk.services.s3.model.Tag;
 
 public class S3BucketAwsTest {
     static final String BUCKET = AwsSupport.env("BUCKET_NAME");
@@ -17,6 +22,16 @@ public class S3BucketAwsTest {
                     .publicAccessBlockConfiguration();
             assertTrue(cfg.blockPublicAcls() && cfg.ignorePublicAcls()
                     && cfg.blockPublicPolicy() && cfg.restrictPublicBuckets());
+        }
+    }
+
+    @Test
+    void bucketIsTaggedForProject() {
+        try (S3Client s3 = S3Client.builder().credentialsProvider(AwsSupport.profile()).region(AwsSupport.region()).build()) {
+            Map<String, String> tags = s3.getBucketTagging(b -> b.bucket(BUCKET)).tagSet().stream()
+                    .collect(Collectors.toMap(Tag::key, Tag::value));
+            assertEquals("nimbus-notes", tags.get("Project"));
+            assertEquals("dev", tags.get("Env"));
         }
     }
 }
