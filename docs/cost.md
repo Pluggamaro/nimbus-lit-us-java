@@ -24,3 +24,5 @@ Each AWS ticket adds one row for every resource it creates. The teardown uses th
 | Resource | Created in | Cost note | How to delete |
 
 | IAM user `nimbus-dev`, group `nimbus-admins`, one access key | IAM console, AWS-007 | IAM is free | IAM > Users > nimbus-dev > delete the access key, then delete the user, then delete the group |
+
+| S3 bucket `nimbus-exports-dev-bx7....` | S3 console, eu-west-1, AWS-008 | S3 bills per GB stored and per request. A few KB costs effectively nothing | S3 > bucket > Empty, then Delete bucket |
