@@ -16,7 +16,9 @@ class S3HardeningAwsTest{
         try(S3Client s3 = AwsSupport.s3()){
             var rule = s3.getBucketLifecycleConfiguration(b -> b.bucket(BUCKET)).rules().stream()
                         .filter(r -> "expire-exports-7d".equals(r.id())).findFirst().orElseThrow();
-            assertEquals(7, rule.expiration().days());            
+            assertEquals(7, rule.expiration().days()); 
+            assertEquals("exports/", rule.filter().prefix());
+            assertEquals("Enabled", rule.statusAsString());           
         }
     } 
 
