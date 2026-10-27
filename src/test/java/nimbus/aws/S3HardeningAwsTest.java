@@ -2,6 +2,11 @@ package nimbus.aws;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -21,5 +26,13 @@ class S3HardeningAwsTest{
             assertEquals("Enabled", rule.statusAsString());           
         }
     } 
+
+    @Test
+    void anonymousReadIsDenied() throws Exception {
+        URI uri = URI.create("https://" + BUCKET + ".s3.amazonaws.com/exports/hello.json");
+        HttpResponse<Void> res = HttpClient.newHttpClient()
+                .send(HttpRequest.newBuilder(uri).build(), HttpResponse.BodyHandlers.discarding());
+        assertEquals(403, res.statusCode());
+    }
 
 }
