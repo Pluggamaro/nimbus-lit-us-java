@@ -2,6 +2,7 @@ package nimbus.aws;
 
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
 
 public final class AwsSupport {
 
@@ -35,6 +36,13 @@ public final class AwsSupport {
      */
     public static ProfileCredentialsProvider profile(){
         return ProfileCredentialsProvider.create(System.getenv().getOrDefault("AWS_PROFILE","nimbus"));
+    }
+
+    /** Returns an S3 client with the region and profile set
+     * @return S3Client
+     */
+    public static S3Client s3() {
+        return S3Client.builder().region(region()).credentialsProvider(profile()).build();
     }
 
 }
