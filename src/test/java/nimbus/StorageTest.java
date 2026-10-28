@@ -20,10 +20,11 @@ class StorageTest {
 
         String key = Storage.putExport(writer,"b",notes,Instant.parse("2026-01-01T00:00:00Z"));
         
-
         assertEquals("exports/notes-2026-01-01T00:00:00Z.json",key);
 
         String json = new String(bucket.get(key), StandardCharsets.UTF_8);
+
+        System.out.println("Debug" + json);
 
         assertEquals(true, json.contains("\"id\":\"1\""));
 
