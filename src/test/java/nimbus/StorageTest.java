@@ -11,8 +11,6 @@ import org.joda.time.Instant;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import com.fasterxml.jackson.databind.ObjectWriter;
-
 class StorageTest {
 
     @Test
