@@ -26,7 +26,7 @@ class StorageTest {
 
         System.out.println("Debug" + json);
 
-        assertEquals(true, json.contains("\"id\":\"1\""));
+        assertEquals(true, json.contains("\"note_id\":\"1\""));
 
     }
 
