@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Storage {
     
     private static final DateTimeFormatter KEY_TIME =
-            DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH-mm-ss'Z'").withZone(ZoneOffset.UTC);
+            DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneOffset.UTC);
     private static final ObjectMapper JSON = new ObjectMapper();
 
      /** Writes the notes as JSON under exports/ and returns the object key. */
