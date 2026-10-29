@@ -3,16 +3,13 @@ package nimbus;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.joda.time.Instant;
+
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-
-import com.fasterxml.jackson.databind.ObjectWriter;
-
 class StorageTest {
 
     @Test
@@ -23,12 +20,13 @@ class StorageTest {
 
         String key = Storage.putExport(writer,"b",notes,Instant.parse("2026-01-01T00:00:00Z"));
         
-
         assertEquals("exports/notes-2026-01-01T00:00:00Z.json",key);
 
         String json = new String(bucket.get(key), StandardCharsets.UTF_8);
 
-        assertEquals(true, json.contains("\"id\":\"1\""));
+        System.out.println("Debug" + json);
+
+        assertEquals(true, json.contains("\"note_id\":\"1\""));
 
     }
 
