@@ -26,3 +26,5 @@ Each AWS ticket adds one row for every resource it creates. The teardown uses th
 | IAM user `nimbus-dev`, group `nimbus-admins`, one access key | IAM console, AWS-007 | IAM is free | IAM > Users > nimbus-dev > delete the access key, then delete the user, then delete the group |
 
 | S3 bucket `nimbus-exports-dev-bx7....` | S3 console, eu-west-1, AWS-008 | S3 bills per GB stored and per request. A few KB costs effectively nothing | S3 > bucket > Empty, then Delete bucket |
+
+| S3 lifecycle rule `expire-exports-7d` and sample object `exports/hello.json` | S3 console, eu-west-1, AWS-009 | Lifecycle rules are free. The sample object is a few bytes | Delete `exports/hello.json` from the bucket, then delete the bucket in the teardown (#27) |

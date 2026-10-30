@@ -38,3 +38,11 @@ For example, AWS keeps the DynamoDB servers patched. This project decides whethe
 The dev user `nimbus-dev` is a member of the `nimbus-admins` group, which has AdministratorAccess. This is a learning choice: the single user needs to create and delete every resource in the project. Production would grant only the specific actions each workload needs.
 
 Learning credentials are a long-lived access key stored in `~/.aws/`, outside the repository. Production would use IAM Identity Center with `aws configure sso`, which issues short-lived credentials, so no long-lived key exists on any machine. The `nimbus-dev` user has MFA assigned to its console sign-in.
+
+## S3 lifecycle and private storage
+
+The export bucket has one lifecycle rule, `expire-exports-7d`, scoped to the `exports/` prefix. It expires objects seven days after creation, so old exports are deleted without manual work. The rule applies only under `exports/`, so any other data placed in the bucket is unaffected.
+
+Lifecycle rules run in the background, so expiry can take a day or two after the seven-day mark. The test checks that the rule exists and is configured correctly, not that a file has disappeared.
+
+The bucket blocks all public access. An anonymous request to an object returns 403 whether or not the object exists, so that response shows the bucket refuses the public, not that the object is present. The upload step in the ticket confirms the object exists.
