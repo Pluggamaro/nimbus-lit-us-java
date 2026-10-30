@@ -28,3 +28,5 @@ Each AWS ticket adds one row for every resource it creates. The teardown uses th
 | S3 bucket `nimbus-exports-dev-bx7....` | S3 console, eu-west-1, AWS-008 | S3 bills per GB stored and per request. A few KB costs effectively nothing | S3 > bucket > Empty, then Delete bucket |
 
 | S3 lifecycle rule `expire-exports-7d` and sample object `exports/hello.json` | S3 console, eu-west-1, AWS-009 | Lifecycle rules are free. The sample object is a few bytes | Delete `exports/hello.json` from the bucket, then delete the bucket in the teardown (#27) |
+
+| Lambda function `nimbus-notes-handler-dev`, role `nimbus-lambda-role-dev`, log group `/aws/lambda/nimbus-notes-handler-dev` | Lambda and IAM consoles, eu-west-1, AWS-012 | Lambda bills per request and per GB-second, within the free allowance at this volume. The log group bills for stored logs and is not deleted with the function | Delete the function, the role, and the log group in that order |

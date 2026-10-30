@@ -2,6 +2,7 @@ package nimbus.aws;
 
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.lambda.LambdaClient;
 import software.amazon.awssdk.services.s3.S3Client;
 
 public final class AwsSupport {
@@ -20,6 +21,10 @@ public final class AwsSupport {
             throw new IllegalStateException("Set "+name+ " in your shell (see .env.example)");
         }
         return value;
+    }
+
+    public static LambdaClient lambda() {
+    return LambdaClient.builder().region(region()).credentialsProvider(profile()).build();
     }
 
     /** Reads the region,
