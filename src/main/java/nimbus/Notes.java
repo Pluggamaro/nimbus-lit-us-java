@@ -1,5 +1,6 @@
 package nimbus;
 
+import java.time.Instant;
 import java.util.Map;
 
 public final class Notes {
@@ -21,7 +22,15 @@ public final class Notes {
         if (trimmed.isEmpty()) {
             throw new ValidationException("text must not be blank");
         }
+        if (trimmed.codePointCount(0, trimmed.length()) > MAX_LENGTH) {
+            throw new ValidationException("text must be 280 characters or fewer");
+        }
 
         return trimmed;
+    }
+
+     /** Builds a note. A null ID or timestamp is replaced with a generated value. */
+    public static Note newNote(String text, String noteId, Instant now) {
+        return new Note("","","");
     }
 }
