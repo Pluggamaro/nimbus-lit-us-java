@@ -22,4 +22,9 @@ class NotesTest {
         assertThrows(ValidationException.class, () -> Notes.validateText(Map.of()));
     }
 
+    @Test
+    void rejectsBlankText() {
+        assertThrows(ValidationException.class, () -> Notes.validateText(Map.of("text", "   ")));
+    }
+
 }
