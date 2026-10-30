@@ -1,7 +1,12 @@
 package nimbus;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Handler;
+
+import org.junit.jupiter.api.Test;
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse;
@@ -22,6 +27,13 @@ class HandlerTest {
 
     static APIGatewayV2HTTPResponse call(Handler handler, APIGatewayV2HTTPEvent e, List<String> logs) {
         return handler.handle(e, logs::add);
+    }
+
+    @Test
+    void postNotesCreatesNoteAndReturns201() {
+        InMemoryNoteRepository repo = new InMemoryNoteRepository();
+        APIGatewayV2HTTPResponse res = call(new Handler(repo), event("POST", "/notes", "{\"text\":\"hello\"}"), new ArrayList<>());
+        assertEquals(201, res.getStatusCode());
     }
 
 }
