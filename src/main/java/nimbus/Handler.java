@@ -7,6 +7,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Handler implements RequestHandler<APIGatewayV2HTTPEvent, APIGatewayV2HTTPResponse> {
@@ -55,6 +56,21 @@ public class Handler implements RequestHandler<APIGatewayV2HTTPEvent, APIGateway
             return respond(200, repo.list());
         }
         return respond(404, Map.of("error", "not found"));
+    }
+
+    private APIGatewayV2HTTPResponse createNote(String body) {
+        if (body == null) {
+            throw new ValidationException("request body is required");
+        }
+        Object payload;
+        try {
+            payload = JSON.readValue(body, Object.class);
+        } catch (JsonProcessingException e) {
+            throw new ValidationException("body must be valid JSON");
+        }
+        Note note = Notes.newNote(Notes.validateText(payload), null, null);
+        repo.add(note);
+        return respond(201, note);
     }
 
 }
