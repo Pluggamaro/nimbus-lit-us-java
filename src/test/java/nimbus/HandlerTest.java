@@ -69,4 +69,13 @@ class HandlerTest {
                 event("GET", "/nope", null), new ArrayList<>()).getStatusCode());
     }
 
+    @Test
+    void handlerLogsRouteAndStatusAsJson() {
+        List<String> logs = new ArrayList<>();
+        call(new Handler(new InMemoryNoteRepository()), event("GET", "/notes", null), logs);
+        String last = logs.get(logs.size() - 1);
+        assertTrue(last.contains("\"route\":\"GET /notes\""));
+        assertTrue(last.contains("\"status\":200"));
+    }
+
 }
