@@ -2,6 +2,7 @@ package nimbus;
 
 import java.time.Instant;
 import java.util.Map;
+import java.util.UUID;
 
 public final class Notes {
 
@@ -31,6 +32,8 @@ public final class Notes {
 
      /** Builds a note. A null ID or timestamp is replaced with a generated value. */
     public static Note newNote(String text, String noteId, Instant now) {
-        return new Note("","","");
+        String id = noteId != null ? noteId : UUID.randomUUID().toString().replace("-", "");
+        Instant when = now != null ? now : Instant.now();
+        return new Note(id, text, when.toString());
     }
 }
