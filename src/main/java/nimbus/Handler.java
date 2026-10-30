@@ -73,4 +73,16 @@ public class Handler implements RequestHandler<APIGatewayV2HTTPEvent, APIGateway
         return respond(201, note);
     }
 
+    private static APIGatewayV2HTTPResponse respond(int status, Object body) {
+        try {
+            return APIGatewayV2HTTPResponse.builder()
+                    .withStatusCode(status)
+                    .withHeaders(Map.of("Content-Type", "application/json"))
+                    .withBody(JSON.writeValueAsString(body))
+                    .build();
+        } catch (JsonProcessingException e) {
+            throw new IllegalStateException("could not serialise response", e);
+        }
+    }
+
 }
