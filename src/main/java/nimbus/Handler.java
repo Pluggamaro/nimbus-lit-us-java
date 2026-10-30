@@ -85,4 +85,13 @@ public class Handler implements RequestHandler<APIGatewayV2HTTPEvent, APIGateway
         }
     }
 
+    /** Only the route and status are logged. Note text never reaches the logs. */
+    private static String logLine(String route, int status) {
+        try {
+            return JSON.writeValueAsString(Map.of("route", route, "status", status));
+        } catch (JsonProcessingException e) {
+            throw new IllegalStateException("could not format log line", e);
+        }
+    }
+
 }
