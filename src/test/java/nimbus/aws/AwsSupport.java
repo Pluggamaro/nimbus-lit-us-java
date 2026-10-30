@@ -1,5 +1,11 @@
 package nimbus.aws;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.lambda.LambdaClient;
@@ -8,6 +14,17 @@ import software.amazon.awssdk.services.s3.S3Client;
 public final class AwsSupport {
 
     private AwsSupport() {}
+
+    public record HttpResult(int status, String body){}
+
+    static HttpResult call(String url, String method, String body) throws Exception {
+    HttpRequest.Builder b = HttpRequest.newBuilder(URI.create(url)).timeout(Duration.ofSeconds(10))
+            .header("Content-Type", "application/json");
+    b = body == null ? b.method(method, HttpRequest.BodyPublishers.noBody())
+                     : b.method(method, HttpRequest.BodyPublishers.ofString(body));
+    HttpResponse<String> res = HttpClient.newHttpClient().send(b.build(), HttpResponse.BodyHandlers.ofString());
+    return new HttpResult(res.statusCode(), res.body());
+    }
 
     /** Returns the variable's value or
      * fails with a message telling you
