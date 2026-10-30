@@ -46,3 +46,9 @@ The export bucket has one lifecycle rule, `expire-exports-7d`, scoped to the `ex
 Lifecycle rules run in the background, so expiry can take a day or two after the seven-day mark. The test checks that the rule exists and is configured correctly, not that a file has disappeared.
 
 The bucket blocks all public access. An anonymous request to an object returns 403 whether or not the object exists, so that response shows the bucket refuses the public, not that the object is present. The upload step in the ticket confirms the object exists.
+
+## Lambda
+
+The function `nimbus-notes-handler-dev` runs with the execution role `nimbus-lambda-role-dev`, which lets the code write logs and, in later tickets, access DynamoDB and S3. The execution role controls what the code may do. A separate resource-based policy controls who may invoke the function, which is API Gateway, added in AWS-013.
+
+The function uses 512 MB of memory rather than 128 MB. A JVM needs more memory to start and run quickly, and Lambda allocates CPU in proportion to memory. The cold-start duration from the REPORT line in CloudWatch is recorded in the test output and compared with later changes.
