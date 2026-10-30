@@ -22,6 +22,6 @@ public final class Notes {
             throw new ValidationException("text must not be blank");
         }
 
-        return "";
+        return trimmed;
     }
 }
