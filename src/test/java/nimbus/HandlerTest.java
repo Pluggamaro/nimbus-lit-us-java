@@ -39,4 +39,12 @@ class HandlerTest {
         assertEquals(1, repo.list().size());
     }
 
+    @Test
+    void postInvalidNoteReturns400WithMessage() {
+        APIGatewayV2HTTPResponse res = call(new Handler(new InMemoryNoteRepository()),
+                event("POST", "/notes", "{\"text\":\"\"}"), new ArrayList<>());
+        assertEquals(400, res.getStatusCode());
+        assertTrue(res.getBody().contains("\"error\""));
+    }
+
 }
