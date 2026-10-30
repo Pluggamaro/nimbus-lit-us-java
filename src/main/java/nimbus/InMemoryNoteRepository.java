@@ -1,6 +1,6 @@
 package nimbus;
 
-import java.util.Comparator;
+import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -16,8 +16,8 @@ public class InMemoryNoteRepository implements NoteRepository {
     @Override
     public List<Note> list() {
         return notes.stream()
-                .sorted(Comparator.comparing((Note n) -> Instant.parse(n.createdAt())).reversed())
-                .toList();
+            .sorted((a, b) -> Instant.parse(b.createdAt()).compareTo(Instant.parse(a.createdAt())))
+            .toList();
     }
 
 }
