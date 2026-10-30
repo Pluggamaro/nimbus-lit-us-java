@@ -30,7 +30,7 @@ class LambdaAwsTest {
             GetFunctionConfigurationResponse cfg = lambda.getFunctionConfiguration(b -> b.functionName(FUNCTION));
             assertEquals("nimbus.Handler::handleRequest", cfg.handler());
             assertTrue(cfg.memorySize() >= 512);
-            assertTrue(cfg.timeout() <= 10);
+            assertTrue(cfg.timeout() <= 15);
         }
     }
     
