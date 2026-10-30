@@ -8,6 +8,8 @@ class HandlerTest {
         APIGatewayV2HTTPEvent e = new APIGatewayV2HTTPEvent();
         e.setRawPath(path);
         e.setBody(body);
+        APIGatewayV2HTTPEvent.RequestContext ctx = new APIGatewayV2HTTPEvent.RequestContext();
+        APIGatewayV2HTTPEvent.RequestContext.Http http = new APIGatewayV2HTTPEvent.RequestContext.Http();
         return e;
     }
 
