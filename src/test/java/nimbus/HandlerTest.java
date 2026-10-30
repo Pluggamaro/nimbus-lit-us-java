@@ -54,4 +54,15 @@ class HandlerTest {
         assertEquals(400, res.getStatusCode());
     }
 
+    @Test
+    void getNotesReturnsNewestFirst() {
+        InMemoryNoteRepository repo = new InMemoryNoteRepository();
+        repo.add(new Note("1", "old", "2026-01-01T00:00:00Z"));
+        repo.add(new Note("2", "new", "2026-01-02T00:00:00Z"));
+        APIGatewayV2HTTPResponse res = call(new Handler(repo), event("GET", "/notes", null), new ArrayList<>());
+        assertTrue(res.getBody().indexOf("new") < res.getBody().indexOf("old"));
+    }
+
+    
+
 }
