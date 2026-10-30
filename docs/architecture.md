@@ -37,6 +37,14 @@ Out of scope:
   curl/ client <------Download link-----<|
 
   IAM roles guard every arrow. Region: one. Environment: dev only.
+
+### Request and response contract
+
+| Method | Route | Request body | Success | Errors |
+|---|---|---|---|---|
+| POST | `/notes` | JSON object with `text` (string, 1 to 280 characters after trimming) | 201, the saved note | 400 if the body is missing, not JSON, or the text is invalid |
+| GET | `/notes` | none | 200, array of notes, newest first | none expected |
+| any other | any other | none | 404 | 404 `{"error":"not found"}` |
  
 ## Data flow
 POST /notes.
