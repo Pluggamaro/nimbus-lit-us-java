@@ -6,7 +6,8 @@ class HandlerTest {
 
     static APIGatewayV2HTTPEvent event(String method, String path, String body) {
         APIGatewayV2HTTPEvent e = new APIGatewayV2HTTPEvent();
-
+        e.setRawPath(path);
+        e.setBody(body);
         return e;
     }
 
