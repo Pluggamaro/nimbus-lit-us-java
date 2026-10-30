@@ -1,6 +1,10 @@
 package nimbus;
 
+import java.util.List;
+import java.util.logging.Handler;
+
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse;
 
 class HandlerTest {
 
@@ -14,6 +18,10 @@ class HandlerTest {
         ctx.setHttp(http);
         e.setRequestContext(ctx);
         return e;
+    }
+
+    static APIGatewayV2HTTPResponse call(Handler handler, APIGatewayV2HTTPEvent e, List<String> logs) {
+        return handler.handle(e, logs::add);
     }
 
 }
