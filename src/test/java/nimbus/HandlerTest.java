@@ -63,6 +63,10 @@ class HandlerTest {
         assertTrue(res.getBody().indexOf("new") < res.getBody().indexOf("old"));
     }
 
-    
+    @Test
+    void unknownRouteReturns404() {
+        assertEquals(404, call(new Handler(new InMemoryNoteRepository()),
+                event("GET", "/nope", null), new ArrayList<>()).getStatusCode());
+    }
 
 }
