@@ -1,6 +1,7 @@
 package nimbus;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,8 @@ class HandlerTest {
         InMemoryNoteRepository repo = new InMemoryNoteRepository();
         APIGatewayV2HTTPResponse res = call(new Handler(repo), event("POST", "/notes", "{\"text\":\"hello\"}"), new ArrayList<>());
         assertEquals(201, res.getStatusCode());
+        assertTrue(res.getBody().contains("\"text\":\"hello\""));
+        assertEquals(1, repo.list().size());
     }
 
 }
