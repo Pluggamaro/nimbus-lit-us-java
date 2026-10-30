@@ -47,4 +47,11 @@ class HandlerTest {
         assertTrue(res.getBody().contains("\"error\""));
     }
 
+    @Test
+    void postMalformedJsonReturns400() {
+        APIGatewayV2HTTPResponse res = call(new Handler(new InMemoryNoteRepository()),
+                event("POST", "/notes", "{not json"), new ArrayList<>());
+        assertEquals(400, res.getStatusCode());
+    }
+
 }
