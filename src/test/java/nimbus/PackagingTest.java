@@ -10,7 +10,7 @@ import java.util.jar.JarFile;
 import org.junit.jupiter.api.Test;
 
 class PackagingTest {
-    static final Path ROOT = Path.of("");
+    static final Path ROOT = Path.of("").toAbsolutePath();
 
     @Test
     void packageScriptBuildsJarWithHandlerAndNoSecrets() throws Exception {
