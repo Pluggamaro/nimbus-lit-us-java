@@ -140,6 +140,8 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <finalName>nimbus-lit-us
+                            </finalName>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
