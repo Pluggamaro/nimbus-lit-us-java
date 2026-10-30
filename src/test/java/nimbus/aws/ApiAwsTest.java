@@ -17,4 +17,11 @@ class ApiAwsTest {
         assertTrue(r.body().contains("api test"));
     }
 
+    @Test
+    void getNotesReturns200AndAList() throws Exception {
+        AwsSupport.HttpResult r = AwsSupport.call(API + "/notes", "GET", null);
+        assertEquals(200, r.status());
+        assertTrue(r.body().startsWith("["));
+    }
+
 }
