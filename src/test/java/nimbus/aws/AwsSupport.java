@@ -17,6 +17,16 @@ public final class AwsSupport {
 
     public record HttpResult(int status, String body){}
 
+    /**
+     * Makes a HTTP call to the given URL with the given method and body, returning the status code 
+     * and body as a HttpResult.
+     * This is a convenience method for making HTTP requests to AWS services.
+     * @param url the URL to call
+     * @param method the HTTP method to use (GET, POST, etc.)
+     * @param body the body of the request
+     * @return HttpResult the status code and body of the response
+     * @throws Exception
+     */
     static HttpResult call(String url, String method, String body) throws Exception {
     HttpRequest.Builder b = HttpRequest.newBuilder(URI.create(url)).timeout(Duration.ofSeconds(10))
             .header("Content-Type", "application/json");
@@ -26,7 +36,8 @@ public final class AwsSupport {
     return new HttpResult(res.statusCode(), res.body());
     }
 
-    /** Returns the variable's value or
+    /**
+     * Returns the variable's value or
      * fails with a message telling you
      * what to set
      * @param name the env var to search
