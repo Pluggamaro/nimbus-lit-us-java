@@ -10,6 +10,9 @@ class HandlerTest {
         e.setBody(body);
         APIGatewayV2HTTPEvent.RequestContext ctx = new APIGatewayV2HTTPEvent.RequestContext();
         APIGatewayV2HTTPEvent.RequestContext.Http http = new APIGatewayV2HTTPEvent.RequestContext.Http();
+        http.setMethod(method);
+        ctx.setHttp(http);
+        e.setRequestContext(ctx);
         return e;
     }
 
