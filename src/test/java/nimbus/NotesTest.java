@@ -32,4 +32,9 @@ class NotesTest {
         assertThrows(ValidationException.class, () -> Notes.validateText(Map.of("text", "x".repeat(281))));
     }
 
+    @Test
+    void acceptsAndTrimsText() {
+        assertEquals("hi", Notes.validateText(Map.of("text", "  hi  ")));
+    }
+
 }
