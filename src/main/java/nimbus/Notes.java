@@ -13,6 +13,9 @@ public final class Notes {
         if (!(payload instanceof Map<?, ?> map)) {
             throw new ValidationException("request body must be a JSON object");
         }
+        if (!(map.get("text") instanceof String text)) {
+            throw new ValidationException("text is required and must be a string");
+        }
 
         return "";
     }
