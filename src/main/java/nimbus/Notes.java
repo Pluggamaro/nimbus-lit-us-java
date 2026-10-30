@@ -16,6 +16,11 @@ public final class Notes {
         if (!(map.get("text") instanceof String text)) {
             throw new ValidationException("text is required and must be a string");
         }
+        
+        String trimmed = text.strip();
+        if (trimmed.isEmpty()) {
+            throw new ValidationException("text must not be blank");
+        }
 
         return "";
     }
