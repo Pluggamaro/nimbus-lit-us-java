@@ -47,4 +47,14 @@ public class Handler implements RequestHandler<APIGatewayV2HTTPEvent, APIGateway
         return response;
     }
 
+    private APIGatewayV2HTTPResponse dispatch(String method, String path, String body) {
+        if ("POST".equals(method) && "/notes".equals(path)) {
+            return createNote(body);
+        }
+        if ("GET".equals(method) && "/notes".equals(path)) {
+            return respond(200, repo.list());
+        }
+        return respond(404, Map.of("error", "not found"));
+    }
+
 }
