@@ -24,4 +24,14 @@ class ApiAwsTest {
         assertTrue(r.body().startsWith("["));
     }
 
+    @Test
+    void postBlankNoteReturns400() throws Exception {
+        assertEquals(400, AwsSupport.call(API + "/notes", "POST", "{\"text\":\"\"}").status());
+    }
+
+    @Test
+    void unmappedRouteReturns404() throws Exception {
+        assertEquals(404, AwsSupport.call(API + "/nope", "GET", null).status());
+    }
+
 }
