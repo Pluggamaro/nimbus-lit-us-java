@@ -27,4 +27,9 @@ class NotesTest {
         assertThrows(ValidationException.class, () -> Notes.validateText(Map.of("text", "   ")));
     }
 
+    @Test
+    void rejectsTextOver280Characters() {
+        assertThrows(ValidationException.class, () -> Notes.validateText(Map.of("text", "x".repeat(281))));
+    }
+
 }
