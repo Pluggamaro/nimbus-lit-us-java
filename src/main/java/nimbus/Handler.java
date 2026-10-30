@@ -1,5 +1,6 @@
 package nimbus;
 
+import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse;
@@ -14,6 +15,11 @@ public class Handler implements RequestHandler<APIGatewayV2HTTPEvent, APIGateway
     /** Used by the Lambda runtime, which needs a no-argument constructor. */
     public Handler() {
         this(new InMemoryNoteRepository());
+    }
+
+    /** Used by tests, and by anything that wants to supply its own repository. */
+    public Handler(NoteRepository repo) {
+        this.repo = repo;
     }
 
     @Override
