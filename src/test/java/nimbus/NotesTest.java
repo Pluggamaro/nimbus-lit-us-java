@@ -37,4 +37,10 @@ class NotesTest {
         assertEquals("hi", Notes.validateText(Map.of("text", "  hi  ")));
     }
 
+    @Test
+    void newNoteHasIdTextAndTimestamp() {
+        Note note = Notes.newNote("hi", "n1", Instant.parse("2026-01-01T00:00:00Z"));
+        assertEquals(new Note("n1", "hi", "2026-01-01T00:00:00Z"), note);
+    }
+
 }
